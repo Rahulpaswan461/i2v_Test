@@ -38,6 +38,8 @@ If you are unable to set up the angular application, you can use the tools like 
 5. The hash value for the name should be displayed below the button. Copy the hash value.
 
 ### Paste the hash value Here in the readme file: 
+96d9632f363564cc3032521409cf22a852f2032eec099ed5967c0d000cec607a
+- Name : John
 ___
 
 ## Troubleshooting
