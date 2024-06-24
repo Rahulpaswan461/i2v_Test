@@ -1,32 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Test_DotNet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HashController : Controller
+    public class HashController : ControllerBase
     {
         [HttpGet("{firstName}")]
-        public JsonResult GetHash(string firstName)
+        public IActionResult GetHash(string firstName)
         {
             string input = firstName;
-            byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
             
             using (var hash = SHA256.Create())
             {
                 byte[] hashedBytes = hash.ComputeHash(inputBytes);
                 
-                // Return a HashResponse Object which contains the hashString (alphanumeric, without '-') converted from hashedBytes
+                // Convert byte array to hexadecimal string representation
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashedBytes.Length; i++)
+                {
+                    builder.Append(hashedBytes[i].ToString("x2")); // "x2" formats byte to hexadecimal
+                }
+                string hashString = builder.ToString();
+                
+                // Return a HashResponse Object which contains the hashString
                 var response = new HashResponse
                 {
-                    Hash = hashedBytes
+                    Hash = hashString
                 };
-                return new JsonResult(response);
+                
+                return Ok(response);
             }
         }
 

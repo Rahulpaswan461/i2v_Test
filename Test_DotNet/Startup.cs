@@ -32,14 +32,14 @@ namespace Test_DotNet
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Test_DotNet", Version = "v1" });
             });
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:50702", "http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+           services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy",
+            builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+    });
 
         }
 
